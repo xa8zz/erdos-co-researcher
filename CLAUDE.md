@@ -1,54 +1,3 @@
-<!-- REPO_TREE_BEGIN -->
-```
-.claude/
-  settings.json
-.gitignore
-.mcp.json
-CLAUDE.md
-README.md
-docs/
-  round-doc-schema.md
-  writing-prompts.md
-scripts/
-  add_round_doc.py
-  compile_rounds.py
-  update-tree.sh
-skills/
-  README.md
-  add-round-doc.md
-  commit-round.md
-  onboard.md
-  paper-review/
-    SKILL.md
-    automated-review-guide/
-      SKILL.md
-    latte-review-guide/
-      SKILL.md
-    paper-critique-framework/
-      SKILL.md
-    paper-reading-assistant/
-      SKILL.md
-    peer-review-guide/
-      SKILL.md
-    rebuttal-writing-guide/
-      SKILL.md
-    review-response-guide/
-      SKILL.md
-    scientify-write-review-paper/
-      SKILL.md
-  pre-compact-capture.md
-  progress-zoom-out.md
-  sync-research-state.md
-  write-audit-prompt.md
-  write-codex-task.md
-  write-followup-prompt.md
-templates/
-  adversarial-audit.md
-  informal-audit.md
-  round-doc.md
-```
-<!-- REPO_TREE_END -->
-
 # Research Harness — Operating Manual
 
 ## Your role
@@ -196,7 +145,6 @@ Reference these whenever drafting. The `writing-prompts.md` doc is the main prom
 | `docs/writing-prompts.md` | **Main prompting reference.** Researcher prompt template, framing rules, good/bad examples, A/B/C branching, long-horizon observations. Context-specific guidance for researcher / follow-up / audit / Codex / local-agent / third-party recipients. |
 | `templates/informal-audit.md` | Default audit prompt body (short, for routine per-round audits) |
 | `templates/adversarial-audit.md` | Sharper audit prompt body (for claims about to be promoted to `Established`) |
-| `templates/round-doc.md` | Blank round-doc scaffold with YAML front-matter |
 
 ## Operating principles
 
