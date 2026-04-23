@@ -156,6 +156,18 @@ Skills are invoked by conversational trigger phrases (saying "write me a follow-
 
 That's the tour. Full depth in `CLAUDE.md` — budget ~10 min when the user has quiet time. Offer: "Want to compose your first researcher prompt together now, or is there more setup to handle first?"
 
+### Step 11 — Make it yours
+
+Important closing note — tell the user this directly:
+
+The skills and setup here were built during one specific research program by someone (arguably a noob) figuring it out as they went. They represent what worked at one point in time with the models available then — not the final answer.
+
+Models will keep getting better. Your workflow will evolve. Some of these skills will stop fitting you. That's expected. **Tweak them, delete ones you don't use, write new ones, rewrite CLAUDE.md in your own voice.** The harness gets better when you shape it to your own style.
+
+Only the core principles are load-bearing — immutable records, per-round commits, prompt-from-compiled-state, curator-not-solver. Everything else is adjustable.
+
+Encourage the user out loud: "Don't treat this as a fixed setup. You should end up with something that feels like yours within a few weeks."
+
 ## Output
 
 Interactive walkthrough. Concrete artifacts produced: scaffolded `<slug>/` directory, personalized README, one initial commit.
