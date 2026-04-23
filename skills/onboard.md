@@ -112,14 +112,49 @@ Named-file `git add` of `<slug>/` + the README edit. Never `-A`. Commit message:
 Initial setup: <slug>
 ```
 
-### Step 7 — Next-steps summary
+### Step 7 — Quick tour: how the research loop works
 
-Give the user a compact pointer list:
+Don't just point at `CLAUDE.md` — walk the user through the shape of a round so they know what they're signing up for. Keep it tight.
 
-1. **Read `CLAUDE.md`** — the orchestrator's full operating manual. Budget ~10 min; it has the research loop, the paste-save protocol, the stuck-research heuristic.
-2. **First dispatch** — use `docs/writing-prompts.md` as the prompting reference. CLAUDE.md has the researcher prompt shape and the frontmatter template for round docs (in the paste-save protocol section).
-3. **Saving responses** — when a research output lands, run `/add-round-doc` (the skill handles byte-faithful extraction + frontmatter write).
-4. **Compile state as you go** — `scripts/compile_rounds.py --root <slug>/ --out <slug>/state_compiled.md`. Do this before every dispatch so prompts reflect the current state view, not your memory.
+One round = one full cycle:
+
+1. **Refresh state** — `scripts/compile_rounds.py --root <slug>/ --out <slug>/state_compiled.md` regenerates the view from all committed round docs. Do this before every dispatch — the prompt should come from the compiled state, not session memory.
+2. **Pre-send verification** — paste the drafted researcher prompt into ≥ 2 verifier tabs before dispatching. Catches anchoring and missing context.
+3. **Dispatch** — send to a fresh thread on the primary research model (Pro / DeepThink / Codex / etc.).
+4. **Save the return** via `add-round-doc` — byte-faithful extraction from session jsonl + YAML frontmatter in one call.
+5. **Informal audits** — paste exact prompt + exact response into ≥ 2 verifier tabs in parallel via `write-audit-prompt`. Never bias one with another's output.
+6. **Formal verification** (optional) — send theorem/lemma claims to Aristotle for Lean 4 formalization.
+7. **Synthesize** — promote / demote by composing new round docs with `action: refutes | supersedes | extends | confirms`. Never edit past round docs — status is derived from the action graph, not stored.
+
+Commit per round. Git is the durability layer — saved-but-uncommitted is as lost as non-existent.
+
+### Step 8 — The skills you'll reach for most
+
+Skills are invoked by conversational trigger phrases (saying "write me a follow-up" fires `write-followup-prompt`; `/<name>` also works). Walk the user through the core set:
+
+| Skill | When it fires |
+|---|---|
+| `add-round-doc` | Every time the user pastes a researcher or verifier response. Most-used skill. |
+| `write-audit-prompt` | Once per round — produces the adversarial prompt for verifier tabs. |
+| `write-followup-prompt` | When a specific gap in a running thread needs pressure. |
+| `write-codex-task` | Handing off computation / verification / sub-proofs to an in-repo agent. |
+| `commit-round` | End of every round. Per-round scope, named-file `git add`. |
+| `sync-research-state` | When new rounds have landed and the state doc needs a targeted refresh. |
+| `progress-zoom-out` | When research stalls or the user asks "where are we." Honest, not reframed. |
+| `pre-compact-capture` | Before compacting the session. Catches unpersisted pastes and uncommitted work. |
+| `paper-review/` bundle | When working on a manuscript — peer review, rebuttals, critique framework, literature reviews (8 skills). |
+
+### Step 9 — Three principles to internalize
+
+1. **Frontmatter is immutable.** Once a round doc is written, it's never edited. Status is derived by `compile_rounds.py` from the `action` graph — never stored as a field. Overturn via a new round doc with `action.kind: refutes | supersedes` pointing at its `id`.
+
+2. **Commit per round.** Git is the durability layer. Saved-but-uncommitted files are just as lost as non-existent ones.
+
+3. **Prompt from compiled state, not memory.** When a research dispatch feels stuck, the problem is almost always upstream of the agent — stale state, anchored framing, session jargon leakage, missing failure mechanism, or frontier-research framing. Recompile, re-read, re-draft. Details in `docs/writing-prompts.md`.
+
+### Step 10 — Ready?
+
+That's the tour. Full depth in `CLAUDE.md` — budget ~10 min when the user has quiet time. Offer: "Want to compose your first researcher prompt together now, or is there more setup to handle first?"
 
 ## Output
 
