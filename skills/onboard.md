@@ -117,7 +117,7 @@ Initial setup: <slug>
 Give the user a compact pointer list:
 
 1. **Read `CLAUDE.md`** — the orchestrator's full operating manual. Budget ~10 min; it has the research loop, the paste-save protocol, the stuck-research heuristic.
-2. **First dispatch** — use `docs/writing-prompts.md` as the prompting reference and `templates/round-doc.md` for the frontmatter scaffold. The researcher-prompt template in CLAUDE.md has the exact shape.
+2. **First dispatch** — use `docs/writing-prompts.md` as the prompting reference. CLAUDE.md has the researcher prompt shape and the frontmatter template for round docs (in the paste-save protocol section).
 3. **Saving responses** — when a research output lands, run `/add-round-doc` (the skill handles byte-faithful extraction + frontmatter write).
 4. **Compile state as you go** — `scripts/compile_rounds.py --root <slug>/ --out <slug>/state_compiled.md`. Do this before every dispatch so prompts reflect the current state view, not your memory.
 
