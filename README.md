@@ -12,4 +12,8 @@ Then run `/onboard`.
 
 Worth hooking up browser automation so the co-researcher can read/write chat tabs on its own — [Browser Use CLI](https://github.com/browser-use/browser-use), [Vercel Browser](https://vercel.com/), Claude-in-Chrome, Playwright, whatever fits. Onboarding helps pick. Also [Aristotle](https://harmonic.fun) if you have theorems.
 
+How co-researcher works:
+
+![](docs/harness-loop.svg)
+
 License: MIT / CC-BY 4.0.
