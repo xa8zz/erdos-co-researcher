@@ -1,35 +1,23 @@
 # erdos-co-researcher
 
-A harness for running an orchestrator agent — your AI co-researcher — that coordinates across multiple reasoning models (GPT Pro, DeepThink, Codex, Gemini, Aristotle) to push on hard open problems.
+A harness for running an orchestrator agent that coordinates research across multiple reasoning models — GPT Pro, DeepThink, Codex, Gemini, Aristotle. Think of it as your AI co-researcher: it doesn't do the math, it handles state, prompt composition, verification routing, and commit discipline so the strong models can focus on reasoning.
 
-The orchestrator keeps state clean, composes neutral math-first prompts, routes outputs through parallel adversarial verifiers, formalizes claims in Lean via Aristotle, and commits a permanent record per round. It does not solve the math — it builds the infrastructure that lets strong research models do their best work.
-
-Emerged from a 60+ round research program on **Erdős Problem #872** (contributed to a ~0.190n upper bound). Generalizes to any long-horizon research effort where a single strong model isn't enough and you need multiple agents audited against each other.
+Came out of a ~60-round push on Erdős #872 (got to ~0.190n upper bound). Works on any long-horizon research problem where a single model isn't enough.
 
 ## Getting started
 
 ```bash
-git clone <this-repo> my-research
+git clone https://github.com/xa8zz/erdos-co-researcher my-research
 cd my-research
-claude  # or your preferred Claude Code-compatible CLI
+claude   # or codex — anything that reads CLAUDE.md
 ```
 
-Then run `/onboard`. The skill interviews you on your problem, scaffolds your first problem directory, walks you through tool discovery, and gets you to your first dispatch.
+Then run `/onboard` — walks you through your first problem and tool setup.
 
-## Suggested setup
+## Tooling
 
-The harness works best when your co-researcher can reach across agents on your behalf — read chat tabs, extract responses, file them into round docs — without you manually copy-pasting. Onboarding walks through options. The most common rough edges people tool around:
+The orchestrator works best when it can actually reach across agents on its own. Hook up whatever makes that easier — [Browser Use CLI](https://github.com/browser-use/browser-use), [Vercel Browser](https://vercel.com/), Claude-in-Chrome MCP, Playwright, your own MCPs. Onboarding helps you pick. Also [Aristotle](https://harmonic.fun) if your problem has theorems to formalize.
 
-- **Browser automation** — pulling research outputs out of ChatGPT/Claude/Gemini tabs byte-faithfully. Good starting points: [Browser Use CLI](https://github.com/browser-use/browser-use), [Vercel Browser CLI](https://vercel.com/), Claude-in-Chrome MCP, or a Playwright-backed custom MCP. Anything that exposes "read tab content" + "fill textbox" primitives works.
-- **Formal verification** — [Aristotle](https://harmonic.fun) for Lean 4 if your problem has theorem/lemma claims. Very high-signal filter before promoting claims to `Established`.
-- **Your own MCPs** — add whatever makes the orchestrator's prompting + verification routing easier for your domain.
+`CLAUDE.md` explains how it all fits together.
 
-You're encouraged to explore and add your own tooling. The onboarding skill will help you evaluate what fits.
-
-## How it works
-
-Read [CLAUDE.md](CLAUDE.md). It's the orchestrator's full operating manual — the role, the research loop, the frontmatter discipline, the mandatory protocols that fire on every user paste, the long-horizon diagnostic frames for when research stalls.
-
-## License
-
-MIT for code. CC-BY 4.0 for docs and templates.
+License: MIT / CC-BY 4.0.
