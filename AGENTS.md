@@ -49,6 +49,27 @@ One round:
 
 Save and commit per round. Never batch across rounds.
 
+## Save prompts alongside responses — the prompt-saving protocol
+
+Every researcher dispatch produces two artifacts: the prompt sent and the response received. Save both. A round doc without its paired prompt is archaeologically incomplete — future agents auditing a claim cannot reconstruct why the researcher chose the framing it did without seeing what was actually asked.
+
+### The pairing
+
+- **Prompt**: `<problem>/prompts/researcher-R<NN>-<slug>.md` — the verbatim prompt as dispatched. Composed via the researcher-prompt shape in `docs/writing-prompts.md`. Plain markdown body, no YAML front-matter. Same `<slug>` as the response round doc so the pair is discoverable by name.
+- **Response**: `<problem>/researcher-R<NN>-<slug>.md` — the researcher's reply with YAML front-matter, saved via `add-round-doc` with byte-faithful extraction. Include `prompt: <problem>/prompts/researcher-R<NN>-<slug>.md` in the front-matter so the action graph records the pairing.
+
+### When to save
+
+- **Save the prompt at compose-time**, before dispatching to the researcher. If the prompt is edited during verifier pre-send audits (Step 2 of the research loop), save the final post-audit version — that's what actually went out.
+- **Save the response when it returns**, via the byte-faithful extraction protocol documented below.
+- **Commit each piece as it lands** — do not batch. A committed prompt with no response is fine; a committed response with no prompt is a gap.
+
+### Discipline rules
+
+- No session jargon in the prompt body — same rules as the researcher-prompt shape. The saved file must read as self-contained math for an agent that has never seen this repo.
+- One prompt file per dispatch. If the same round has multiple channels (A/B/C branching per `docs/writing-prompts.md`), each channel gets its own prompt file with a channel-disambiguating slug.
+- Audit prompts (for verifier tabs) and Codex tasks also get saved, in the same `prompts/` directory. Use filename prefixes `audit-` and `codex-` respectively to distinguish.
+
 ## When the user pastes content — the save protocol
 
 Any time the user pastes multi-paragraph content from anywhere — research output, transcript excerpt, Pro return, Gemini audit, Codex report, forum snippet, paper passage, raw thoughts — AND the content is about a problem in the repo, you MUST save it as a round doc. Not "should," not "if it seems important," not "if they ask." **Always.** The default action on receiving a paste is: save it. If in doubt, save it. You can always refute or supersede it later; you cannot un-lose a paste that was never persisted.
@@ -242,6 +263,32 @@ A successful Aristotle run (zero `sorry`, or sorries only in standard classics l
 - When a pre-commit hook fails, fix the underlying issue — don't bypass
 
 See `commit-round` skill for the full safe-commit workflow and branch-hygiene rules (including Codex worktree handling).
+
+## When you see a gap — fix it
+
+If you notice something a future agent will trip on — a typo in `CLAUDE.md`, a skill file missing a step that matters, a script producing misleading output, a memory entry that has gone stale, an instruction that contradicts observed practice — **add the correction**. No permission needed. Update the relevant file, add or edit the memory entry, fix the skill, commit with a clear message.
+
+The instruction set is infrastructure. If it drifts out of sync with observed reality, every future agent in this harness pays for the gap. Treat it as load-bearing.
+
+### Applies to
+
+- Typos, formatting errors, or contradictions in `CLAUDE.md` / `AGENTS.md` / `docs/writing-prompts.md`.
+- Skills that reference deprecated workflows or that miss a commonly-used step.
+- Scripts with confusing error messages, ambiguous arguments, or edge cases that bite silently.
+- Memory entries that are outdated or wrong per what you now observe.
+- Recurring curator mistakes worth codifying as a skill or a rule.
+
+### Does not override
+
+- The git safety rules (no force-push to main, no `-A` staging, no `--no-verify`, etc.).
+- The per-round commit discipline — self-improvement commits are scoped separately from round commits.
+- The "don't push to remote unless asked" default for round artifacts. For harness-infrastructure fixes, push when the user has generally authorized infrastructure maintenance; otherwise stage and let the user decide.
+
+### How to apply
+
+- **Small fix** (typo, clarification): edit in place, commit with a message like `CLAUDE.md: clarify X` or `skills/add-round-doc: fix missing Y step`.
+- **New rule or convention**: add to the most relevant section, add a brief example if non-obvious, and save a memory entry if a fresh agent would miss it without the reminder.
+- **Structural change** (restructuring a section, renaming a skill): flag in a commit message and keep the diff scoped.
 
 ## What to avoid
 
